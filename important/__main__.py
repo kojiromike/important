@@ -5,7 +5,10 @@ import logging
 import os
 import sys
 
-from configparser import ConfigParser
+try:
+    from configparser import ConfigParser, NoSectionError
+except ImportError:
+    from ConfigParser import ConfigParser, NoSectionError
 
 import click
 
@@ -33,8 +36,12 @@ if os.path.exists('setup.cfg'):
         else:
             return key_value[0], key_value[1].split()
 
-    CONTEXT_SETTINGS['default_map'] = \
-        dict(map(split, CONFIG.items('important')))
+    try:
+        CONTEXT_SETTINGS['default_map'] = \
+            dict(map(split, CONFIG.items('important')))
+    except NoSectionError:
+        pass
+
 
 
 @click.command(help="Check imports within SOURCECODE (except those files "
