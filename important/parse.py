@@ -17,8 +17,12 @@ from itertools import chain
 
 import pip
 
-from pip.commands.show import search_packages_info
-from pip.req import parse_requirements as pip_parse_requirements
+try:
+    from pip.commands.show import search_packages_info
+    from pip.req import parse_requirements as pip_parse_requirements
+except ImportError:
+    from pip._internal.commands.show import search_packages_info
+    from pip._internal.req import parse_requirements as pip_parse_requirements
 
 
 RE_SHEBANG = re.compile('^#![^\n]*python[0-9]?$')
@@ -117,8 +121,11 @@ def parse_dir_imports(current_directory, exclusions=None):
 
 
 def parse_requirements(filename):
-    requirements = pip_parse_requirements(filename,
-                                          session=pip.download.PipSession())
+    try:
+        pip_session = pip.download.PipSession()
+    except AttributeError:
+        pip_session = pip._internal.download.PipSession()
+    requirements = pip_parse_requirements(filename, session=pip_session)
     for requirement in requirements:
         if not requirement.name:
             raise ValueError(
