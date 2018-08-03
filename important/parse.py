@@ -163,8 +163,8 @@ def translate_req_to_module_names(requirement_name):
         provides |= set(folders)
         # Handle modules that are installed as .py files in site-packages
         top_level_files = filter(is_top_level_file, result['files'])
-        provides |= set([os.path.splitext(filename)[0]
-                         for filename in top_level_files])
+        provides |= {os.path.splitext(filename)[0]
+                     for filename in top_level_files}
 
     if provides:
         return provides
