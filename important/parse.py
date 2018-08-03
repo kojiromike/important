@@ -168,9 +168,8 @@ def translate_req_to_module_names(requirement_name):
 
     if provides:
         return provides
-    else:
-        module_name = requirement_name.split('.')[0]
-        if module_name not in ALL_MODULES:
-            LOGGER.warning("Cannot find install location of '%s'; please \
+    module_name = requirement_name.split('.')[0]
+    if module_name not in ALL_MODULES:
+        LOGGER.warning("Cannot find install location of '%s'; please \
 install this package for more accurate name resolution", requirement_name)
-        return provides if provides else set([requirement_name])
+    return provides if provides else set([requirement_name])
