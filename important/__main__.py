@@ -30,8 +30,7 @@ if os.path.exists('setup.cfg'):
     def split(key_value):
         if key_value[0] in ('sourcecode',):
             return key_value
-        else:
-            return key_value[0], key_value[1].split()
+        return key_value[0], key_value[1].split()
 
     CONTEXT_SETTINGS['default_map'] = \
         dict(map(split, CONFIG.items('important')))
