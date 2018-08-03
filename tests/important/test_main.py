@@ -15,10 +15,10 @@ from click.testing import CliRunner
 
 try:
     from importlib import reload  # Python 3.4+
-except:
+except ImportError:
     try:
         from imp import reload  # Python 3.3
-    except:
+    except ImportError:
         pass  # Python 2.7 provides reload built in
 
 

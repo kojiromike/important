@@ -6,7 +6,7 @@ import re
 
 try:
     from setuptools import setup
-except:
+except ImportError:
     from distutils.core import setup
 
 with open('README.rst') as fh:

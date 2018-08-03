@@ -15,7 +15,7 @@ from important.parse import _imports, parse_file_imports, parse_dir_imports, \
 
 try:
     from unittest.mock import Mock
-except:
+except ImportError:
     from mock import Mock
 
 
